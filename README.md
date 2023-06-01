@@ -126,4 +126,10 @@ GROUP BY Type_of_Transaction
 
 ORDER BY Orders DESC;
 
- 
+
+![image](https://github.com/RajishNair09/SQL/assets/115383187/ceb5741f-e6c2-48fa-905a-81f636038845)
+
+
+--------------------------------------------------------------
+#### Problem 2
+
