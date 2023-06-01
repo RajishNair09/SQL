@@ -21,3 +21,89 @@ By following these steps, you can effectively structure your problem-solving app
 
 ### Below are problems we need to solve :
 --------------------------------------------------------------
+#### Problem 1
+
+“Get the number of orders by the Type of Transaction excluding the orders shipped from Sangli and Srinagar. Also, exclude the SUSPECTED_FRAUD cases based on the Order Status, and sort the result in the descending order based on the number of orders.”
+
+ 
+Before we start working on the solution, as pointed out rightly by Shreyas in the video above, we must analyse what the required input parameters are and what the expected output is. This will help to optimise the query. In the problem statement above, the input and output are as follows:
+
+Input: Orders table (Order_Id, Type, Order_City, Order_Status)
+Expected output: Type of Transaction | Orders (Sorted in the descending order of Orders)
+
+
+## Step 1: 
+
+For the first step, ‘Filter out ‘Sangli’ and ‘Srinagar’ from the city column of the data, the solution was to apply the <> filter condition, but the hack was to apply an ‘and’ operator, as shown in the code below.
+
+     
+
+SELECT * FROM orders
+WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+ 
+
+After executing the code given above, in order to check if the result was correct, Shreyas verified the result by displaying all the unique cities by executing the following code:
+
+SELECT Order_City 
+FROM (
+SELECT * FROM orders
+WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+) as a
+GROUP BY Order_City 
+ 
+
+## Step 2:
+
+ 
+
+Next, we solved the second subpart, ‘Filter out orders that are ‘SUSPECTED_FRAUD’’, using the ‘<>’ filter condition, as shown below. We applied the GROUP BY statement to check all the unique values present in the Order_Status column.
+
+ 
+
+SELECT Order_Status
+
+FROM (
+
+SELECT * FROM orders
+
+WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+
+AND Order_Status<>'SUSPECTED_FRAUD'
+
+) as a
+
+GROUP BY Order_Status
+ 
+
+## Step 3:
+
+ 
+On executing the code given above, the result displayed did not contain the order status ‘SUSPECTED_FRAUD’. Next, we solved the third subpart, in which we had to count the number of orders for a particular transaction type. We solved this subpart by applying the GROUP BY statement for the column Type, named as Type_of_Transaction, and by applying the count aggregate function to orders_id. We executed the following code for the third step:
+
+
+SELECT 
+Type AS Type_of_Transaction,
+COUNT(order_id) as Orders
+FROM orders
+WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+AND Order_Status<>'SUSPECTED_FRAUD'
+GROUP BY Type_of_Transaction
+ 
+
+## Step 4:
+
+ 
+The final subpart was the simplest of all, in which we had to sort the orders for a particular type of transaction in descending order. We solved this subpart by applying the ORDER BY function, followed by the keyword DESC, thereby completing the problem statement. We got the following code as the final solution:
+
+ 
+
+SELECT 
+Type AS Type_of_Transaction,
+COUNT(order_id) as Orders
+FROM orders
+WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+AND Order_Status<>'SUSPECTED_FRAUD'
+GROUP BY Type_of_Transaction
+ORDER BY Orders DESC;
+
+ 
