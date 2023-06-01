@@ -39,18 +39,25 @@ For the first step, ‘Filter out ‘Sangli’ and ‘Srinagar’ from the city 
      
 
 SELECT * FROM orders
+
 WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
  
 
 After executing the code given above, in order to check if the result was correct, Shreyas verified the result by displaying all the unique cities by executing the following code:
 
 SELECT Order_City 
+
 FROM (
+
 SELECT * FROM orders
+
 WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+
 ) as a
+
 GROUP BY Order_City 
  
+
 
 ## Step 2:
 
@@ -82,11 +89,17 @@ On executing the code given above, the result displayed did not contain the orde
 
 
 SELECT 
+
 Type AS Type_of_Transaction,
+
 COUNT(order_id) as Orders
+
 FROM orders
+
 WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+
 AND Order_Status<>'SUSPECTED_FRAUD'
+
 GROUP BY Type_of_Transaction
  
 
@@ -98,12 +111,19 @@ The final subpart was the simplest of all, in which we had to sort the orders fo
  
 
 SELECT 
+
 Type AS Type_of_Transaction,
+
 COUNT(order_id) as Orders
+
 FROM orders
+
 WHERE Order_City <>'Sangli' AND Order_City <>'Srinagar'
+
 AND Order_Status<>'SUSPECTED_FRAUD'
+
 GROUP BY Type_of_Transaction
+
 ORDER BY Orders DESC;
 
  
